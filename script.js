@@ -5,7 +5,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-/* Firebase Config */
+/* 🔥 FIREBASE CONFIG - REPLACE WITH YOUR REAL DATA */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
@@ -15,48 +15,68 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID"
 };
 
+/* INIT FIREBASE */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/* DASHBOARD CONTAINER */
 const dashboard = document.getElementById("dashboard");
 
+/* LOAD DATA FROM FIRESTORE */
 async function loadData() {
-  const snapshot = await getDocs(collection(db, "students"));
+  try {
+    const snapshot = await getDocs(collection(db, "students"));
 
-  let groups = {};
+    console.log("Total students:", snapshot.size);
 
-  snapshot.forEach(doc => {
-    let data = doc.data();
-
-    if (!groups[data.group]) {
-      groups[data.group] = [];
+    if (snapshot.empty) {
+      dashboard.innerHTML = "<p>No data found in Firestore.</p>";
+      return;
     }
 
-    groups[data.group].push(data);
-  });
+    let groups = {};
 
-  render(groups);
+    snapshot.forEach(doc => {
+      let data = doc.data();
+
+      if (!groups[data.group]) {
+        groups[data.group] = [];
+      }
+
+      groups[data.group].push(data);
+    });
+
+    render(groups);
+
+  } catch (error) {
+    console.error("Error loading data:", error);
+    dashboard.innerHTML = "<p style='color:red;'>Error loading data</p>";
+  }
 }
 
+/* RENDER UI */
 function render(groups) {
   dashboard.innerHTML = "";
 
-  for (let group in groups) {
-    let students = groups[group];
+  Object.keys(groups).forEach(groupName => {
+    const students = groups[groupName];
 
-    let section = document.createElement("div");
+    const section = document.createElement("div");
 
     section.innerHTML = `
-      <h2>${group}</h2>
+      <h2>${groupName} (${students.length}/30)</h2>
       <ul>
         ${students.map(s => `
-          <li>• ${s.name}, ${s.phone}, ${s.matric}</li>
+          <li>
+            ${s.name} | ${s.phone} | ${s.matric}
+          </li>
         `).join("")}
       </ul>
     `;
 
     dashboard.appendChild(section);
-  }
+  });
 }
 
+/* RUN */
 loadData();

@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      background: #f4f4f4;
     }
 
     header {
@@ -27,14 +28,22 @@
     h2 {
       margin-top: 25px;
       color: #222;
+      background: #fff;
+      padding: 10px;
+      border-left: 5px solid green;
     }
 
     ul {
-      margin-left: 20px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      list-style: none;
     }
 
     li {
       margin-bottom: 6px;
+      padding: 5px;
+      border-bottom: 1px solid #eee;
     }
   </style>
 </head>
@@ -42,13 +51,14 @@
 <body>
 
 <header>
-  Admin Viewing
+  Admin Dashboard - Group Overview
 </header>
 
 <div class="container">
-  <div id="dashboard"></div>
+  <div id="dashboard">Loading data...</div>
 </div>
 
 <script type="module" src="admin.js"></script>
+
 </body>
 </html>
