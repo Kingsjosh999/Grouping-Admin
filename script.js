@@ -5,26 +5,28 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-/* 🔥 FIREBASE CONFIG - REPLACE WITH YOUR REAL DATA */
+/* 🔥 YOUR REAL FIREBASE CONFIG */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDuBek8rT7rH0o0SkyMLjkYJ6XftcIgcgc",
+  authDomain: "grouping-system-2d529.firebaseapp.com",
+  projectId: "grouping-system-2d529",
+  storageBucket: "grouping-system-2d529.firebasestorage.app",
+  messagingSenderId: "317853326834",
+  appId: "1:317853326834:web:71d64991425b5c9c539f6b"
 };
 
-/* INIT FIREBASE */
+/* 🚀 INIT FIREBASE */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* DASHBOARD CONTAINER */
+/* 🎯 DASHBOARD ELEMENT */
 const dashboard = document.getElementById("dashboard");
 
-/* LOAD DATA FROM FIRESTORE */
+/* 📥 LOAD DATA */
 async function loadData() {
   try {
+    console.log("Connecting to Firebase...");
+
     const snapshot = await getDocs(collection(db, "students"));
 
     console.log("Total students:", snapshot.size);
@@ -37,7 +39,7 @@ async function loadData() {
     let groups = {};
 
     snapshot.forEach(doc => {
-      let data = doc.data();
+      const data = doc.data();
 
       if (!groups[data.group]) {
         groups[data.group] = [];
@@ -54,7 +56,7 @@ async function loadData() {
   }
 }
 
-/* RENDER UI */
+/* 🖥️ RENDER UI */
 function render(groups) {
   dashboard.innerHTML = "";
 
@@ -78,5 +80,5 @@ function render(groups) {
   });
 }
 
-/* RUN */
+/* ▶️ RUN */
 loadData();
