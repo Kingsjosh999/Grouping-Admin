@@ -32,7 +32,7 @@ async function loadData() {
     console.log("Total students:", snapshot.size);
 
     if (snapshot.empty) {
-      dashboard.innerHTML = "<p>No data found in Firestore.</p>";
+      dashboard.innerHTML = "<p>No data found.</p>";
       return;
     }
 
